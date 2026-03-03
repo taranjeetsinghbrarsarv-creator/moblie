@@ -1,0 +1,68 @@
+const langData = {
+  en: {
+    home: "Home",
+    mobile: "Mobile",
+    accessories: "Accessories",
+    contact: "Contact",
+
+    heroTitle: "Latest Smartphones 2026",
+    heroSub: "Original Mobiles • Best Price • Fast Delivery",
+
+    search: "Search products...",
+    all: "All",
+    android: "Android",
+    iphone: "iPhone",
+
+    newArrivals: "🔥 New Arrivals",
+    bestOffers: "💥 Best Offers",
+    addCart: "Add to Cart",
+    details: "Details"
+  },
+
+  hi: {
+    home: "होम",
+    mobile: "मोबाइल",
+    accessories: "एक्सेसरीज़",
+    contact: "संपर्क",
+
+    heroTitle: "नवीनतम स्मार्टफोन 2026",
+    heroSub: "ऑरिजिनल मोबाइल • बेस्ट प्राइस • फास्ट डिलीवरी",
+
+    search: "प्रोडक्ट खोजें...",
+    all: "सभी",
+    android: "एंड्रॉइड",
+    iphone: "आईफोन",
+
+    newArrivals: "🔥 नए मोबाइल",
+    bestOffers: "💥 बेहतरीन ऑफर",
+    addCart: "कार्ट में डालें",
+    details: "जानकारी"
+  }
+};
+
+// DEFAULT LANGUAGE
+let currentLang = localStorage.getItem("lang") || "en";
+
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem("lang", lang);
+  applyLang();
+}
+
+function applyLang(){
+  document.querySelectorAll("[data-lang]").forEach(el=>{
+    const key = el.getAttribute("data-lang");
+    if(langData[currentLang][key]){
+      el.innerText = langData[currentLang][key];
+    }
+  });
+
+  document.querySelectorAll("[data-placeholder]").forEach(el=>{
+    const key = el.getAttribute("data-placeholder");
+    if(langData[currentLang][key]){
+      el.placeholder = langData[currentLang][key];
+    }
+  });
+}
+
+window.addEventListener("DOMContentLoaded", applyLang);

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity World | Premium Mobile Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= PROFESSIONAL CSS ================= */
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #1e293b;
+            --accent: #f43f5e;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.8);
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            background: var(--secondary);
+            position: sticky;
+            top: 0; z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo { color: var(--primary); font-size: 24px; font-weight: 700; }
+
+        .search-container {
+            flex: 0 1 400px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus { background: white; color: black; }
+
+        .menu { display: flex; list-style: none; gap: 20px; }
+        .menu li a { text-decoration: none; color: white; font-weight: 500; transition: 0.3s; }
+        .menu li a:hover { color: var(--primary); }
+
+        .cart-icon {
+            font-size: 22px; color: white; cursor: pointer; position: relative;
+        }
+
+        .cart-badge {
+            position: absolute; top: -10px; right: -12px;
+            background: var(--accent); color: white;
+            font-size: 12px; padding: 2px 7px; border-radius: 50%;
+        }
+
+        /* ================= VIDEO HERO SECTION STYLES ================= */
+        .hero {
+            position: relative;
+            height: 75vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6); /* Dark tint to make text readable */
+            z-index: 0;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+        }
+        /* ============================================================= */
+
+        .hero-text h1 { font-size: 55px; margin-bottom: 15px; letter-spacing: 2px; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero-text p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
+        .hero-text button {
+            padding: 14px 40px; border-radius: 35px; border: none;
+            background: var(--primary); color: white; font-weight: 600;
+            cursor: pointer; transition: 0.4s; font-size: 16px;
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+        }
+        .hero-text button:hover { transform: translateY(-5px); background: #0284c7; box-shadow: 0 15px 25px rgba(14, 165, 233, 0.4); }
+
+        /* Sections Styling */
+        .container { padding: 80px 5%; }
+        .section-title { font-size: 32px; margin-bottom: 45px; text-align: center; position: relative; }
+        .section-title::after {
+            content: ''; width: 60px; height: 4px; background: var(--primary);
+            position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white; border-radius: 20px; padding: 25px;
+            text-align: center; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.4s;
+            border: 1px solid transparent;
+        }
+
+        .product-card:hover { 
+            transform: translateY(-12px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            border-color: var(--primary);
+        }
+        .product-card img { width: 100%; height: 220px; object-fit: contain; margin-bottom: 20px; }
+        .product-card h3 { font-size: 19px; margin-bottom: 12px; }
+        .product-card .price { font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 18px; }
+        
+        .buy-btn {
+            width: 100%; padding: 12px; border-radius: 12px; border: none;
+            background: var(--secondary); color: white; cursor: pointer; transition: 0.3s;
+            font-weight: 600;
+        }
+        .buy-btn:hover { background: var(--primary); }
+
+        .badge {
+            position: absolute; top: 20px; left: 20px;
+            background: var(--accent); color: white;
+            padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            z-index: 10;
+        }
+
+        /* ABOUT SHOP SECTION */
+        .about-shop {
+            background: white;
+            margin-top: 50px;
+            border-radius: 40px;
+            padding: 80px 5%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 60px;
+            align-items: center;
+        }
+        .about-content h2 { font-size: 40px; margin-bottom: 25px; color: var(--secondary); line-height: 1.2; }
+        .about-content p { font-size: 17px; line-height: 1.8; color: #64748b; margin-bottom: 35px; }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .feature-item {
+            padding: 20px; background: var(--light); border-radius: 20px;
+            text-align: center; transition: 0.3s; border: 1px solid #e2e8f0;
+        }
+        .feature-item:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .feature-item b { display: block; font-size: 18px; margin-bottom: 5px; }
+
+        .about-img img {
+            width: 100%; 
+            border-radius: 25px; 
+            box-shadow: 30px 30px 0 var(--primary);
+            transition: 0.5s;
+        }
+        .about-img img:hover { transform: translate(10px, 10px); box-shadow: 15px 15px 0 var(--primary); }
+
+        /* ================= UPDATED HIGH-LEVEL FOOTER CSS ================= */
+        .main-footer {
+            background: var(--secondary);
+            color: white;
+            padding: 60px 5% 20px;
+            text-align: center;
+            border-top: 5px solid var(--primary);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .footer-section p {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .dev-credit {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .dev-name {
+            font-weight: 700;
+            font-size: 22px;
+            background: linear-gradient(90deg, #0ea5e9, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .copy-text {
+            font-size: 12px;
+            margin-top: 15px;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 15px; }
+            .hero-text h1 { font-size: 36px; }
+            .about-content h2 { font-size: 32px; }
+            .features { grid-template-columns: 1fr; }
+            .footer-content { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2 class="logo">📱 INFINITY WORLD</h2>
+
+        <div class="search-container">
+            <input type="text" id="mainSearch" placeholder="Search brands, models..." onkeyup="handleSearch(this.value)">
+        </div>
+
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="mobile.html">Mobiles</a></li>
+            <li><a href="offers.html">Accessories</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="cart-icon" onclick="window.location.href='cart.html'">🛒 <span class="cart-badge" id="cartCount">0</span></div>
+    </nav>
+
+    <section id="searchResultsSection" style="display:none;" class="container">
+        <h2 class="section-title">🔍 Search Results</h2>
+        <div class="products-grid" id="searchResultsGrid"></div>
+        <button onclick="clearSearch()" style="display:block; margin: 30px auto; padding: 12px 30px; border-radius: 25px; cursor:pointer; background: var(--secondary); color: white; border: none;">Back to Home</button>
+    </section>
+
+    <div id="mainContent">
+        <section class="hero">
+            <video class="hero-video" autoplay loop muted playsinline>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+                <h1>Flagship Experience 2026</h1>
+                <p>Premium Devices • Unmatched Quality • Nationwide Shipping</p>
+                <button onclick="document.getElementById('mobiles').scrollIntoView({behavior: 'smooth'})">Explore Shop</button>
+            </div>
+        </section>
+
+        <section class="container" id="mobiles">
+            <h2 class="section-title">🔥 Hot Offers & New Arrivals</h2>
+            <div class="products-grid" id="newArrivalsGrid">
+                </div>
+        </section>
+
+        <section class="container">
+            <div class="about-shop">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <h2>Why Choose Infinity World?</h2>
+                        <p>Established in 2020, Infinity World has become the most trusted destination for tech enthusiasts. We don't just sell phones; we provide a gateway to the future. Our 2026 collection features the world's most advanced AI-integrated devices.</p>
+                        <div class="features">
+                            <div class="feature-item">
+                                <b>🚀 Fast Delivery</b>
+                                <p>Same day in metro cities</p>
+                            </div>
+                            <div class="feature-item">
+                                <b>🛡️ 2 Year Warranty</b>
+                                <p>On all flagship models</p>
+                            </div>
+                            <div class="feature-item">
+                                <b>💳 Easy EMI</b>
+                                <p>0% interest options</p>
+                            </div>
+                            <div class="feature-item">
+                                <b>📞 24/7 Support</b>
+                                <p>Technical assistance</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-img">
+                        <img src="https://www.europeanbusinessreview.com/wp-content/uploads/2015/11/FeatureImage21.jpg" alt="Our Store">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Infinity World</h3>
+                <p>Leading the 2026 mobile revolution with cutting-edge technology and premium customer service. Your trust is our legacy.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Help</h3>
+                <p>Track Order<br>Replacement Policy<br>Privacy Policy<br>Store Locator</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📧 support@infinityworld.com<br>📞 +91 98765 43210<br>📍 New Delhi, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="dev-credit">Designed & Developed with Passion By</p>
+            <div class="dev-name">Taranjeet Singh</div>
+            <p class="copy-text">&copy; 2026 Infinity World | Premium Tech Destination. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ================= DATABASE =================
+        const products = [
+            { id: 1, name: "Samsung Galaxy S23 Ultra", price: 124999, img: "https://m.media-amazon.com/images/I/81ZSn2rk9WL._SX679_.jpg", type: "mobile", badge: "20% OFF" },
+            { id: 2, name: "iPhone 15 Pro Max", price: 159900, img: "https://m.media-amazon.com/images/I/81dT7CUY6GL._SX679_.jpg", type: "mobile", badge: "Trending" },
+            { id: 3, name: "OnePlus 12 Global", price: 69999, img: "https://m.media-amazon.com/images/I/71yTvU9VgdL._SX679_.jpg", type: "mobile", badge: "Hot" },
+            { id: 4, name: "Google Pixel 8 Pro", price: 106999, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfXZDHBilJxf93LxZN8Axp96HxgmetDAFTLw&s", type: "mobile", badge: "AI Ready" },
+            { id: 5, name: "Nothing Phone (2)", price: 44999, img: "https://m.media-amazon.com/images/I/71ZOtNdaZCL._SX679_.jpg", type: "mobile", badge: "Limited" },
+            { id: 6, name: "Xiaomi 14 Ultra", price: 99999, img: "https://m.media-amazon.com/images/I/71jG+e7roXL._SX679_.jpg", type: "mobile", badge: "New" },
+            { id: 7, name: "Vivo X100 Pro", price: 89999, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMlfUlB9p1dC53rumsdPCDoQ1A1CStvbsBmQ&s", type: "mobile", badge: "Sale" },
+            { id: 8, name: "Motorola Edge 50 Pro", price: 35999, img:"https://sell.gameloot.in/wp-content/uploads/sites/4/2024/09/Motorola-Edge-50-Pro.jpg", type: "mobile", badge: "Best Value" }
+        ];
+
+        let cartCount = 0;
+
+        function loadProducts() {
+            const grid = document.getElementById('newArrivalsGrid');
+            grid.innerHTML = ""; 
+            products.forEach(p => {
+                grid.innerHTML += createProductCard(p);
+            });
+            updateCartBadge();
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
+                    <img src="${product.img}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">₹${product.price.toLocaleString()}</p>
+                    <button class="buy-btn" onclick="addToCart('${product.name}', ${product.price}, '${product.img}', this)">Add to Cart</button>
+                </div>
+            `;
+        }
+
+        function handleSearch(val) {
+            const searchTerm = val.toLowerCase().trim();
+            const resultsSection = document.getElementById('searchResultsSection');
+            const mainContent = document.getElementById('mainContent');
+            const resultsGrid = document.getElementById('searchResultsGrid');
+
+            if (searchTerm.length > 0) {
+                const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm));
+                mainContent.style.display = "none";
+                resultsSection.style.display = "block";
+                resultsGrid.innerHTML = "";
+
+                if (filtered.length > 0) {
+                    filtered.forEach(p => resultsGrid.innerHTML += createProductCard(p));
+                } else {
+                    resultsGrid.innerHTML = "<h3 style='grid-column: 1/-1; text-align:center; padding: 50px;'>No products matched your search.</h3>";
+                }
+            } else {
+                clearSearch();
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('mainSearch').value = "";
+            document.getElementById('searchResultsSection').style.display = "none";
+            document.getElementById('mainContent').style.display = "block";
+        }
+
+        function addToCart(name, price, img, btn) {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cart.push({ name, price, img });
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            updateCartBadge();
+            
+            const originalText = btn.innerText;
+            btn.innerText = "Added ✔";
+            btn.style.background = "#10b981";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = "#1e293b";
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        window.onload = loadProducts;
+    </script>
+</body>
+</html>

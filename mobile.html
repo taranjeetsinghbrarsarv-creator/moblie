@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity World | Premium Mobiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================== PREMIUM CSS ================== */
+        :root {
+            --primary: #38bdf8;
+            --secondary: #0f172a;
+            --accent: #f43f5e;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-light); color: var(--secondary); overflow-x: hidden; }
+
+        .navbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 5%; background: var(--secondary);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .navbar .logo { font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .navbar .menu { display: flex; gap: 20px; list-style: none; }
+        .navbar .menu li a { text-decoration: none; color: #fff; font-weight: 500; transition: 0.3s; }
+        .navbar .menu li a:hover { color: var(--primary); }
+        .cart-icon { color: #fff; font-size: 22px; cursor: pointer; position: relative; }
+        .cart-badge { position: absolute; top: -8px; right: -12px; background: var(--accent); color: #fff; font-size: 12px; padding: 2px 7px; border-radius: 50%; }
+
+        .main-container { display: flex; padding: 30px 5%; gap: 30px; min-height: 80vh; }
+
+        .sidebar {
+            flex: 0 0 260px; background: var(--white); padding: 25px;
+            border-radius: 20px; height: fit-content; box-shadow: var(--shadow);
+            position: sticky; top: 100px;
+        }
+        .sidebar h3 { font-size: 18px; margin-bottom: 20px; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; }
+        .filter-group { margin-bottom: 25px; }
+        .filter-group h4 { font-size: 15px; margin-bottom: 12px; color: #64748b; }
+        .filter-group label { display: block; margin-bottom: 8px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .filter-group label:hover { color: var(--primary); }
+        .filter-group input { margin-right: 10px; accent-color: var(--primary); }
+
+        .content-area { flex: 1; }
+        .products-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--white); border-radius: 20px; padding: 20px;
+            text-align: center; position: relative; transition: 0.4s;
+            box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; cursor: pointer; }
+        .card h3 { font-size: 17px; margin-bottom: 8px; height: 45px; overflow: hidden; cursor: pointer; }
+        .card .price { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 15px; }
+        .card .btn-group { display: flex; gap: 10px; }
+        
+        .buy-btn {
+            flex: 1; padding: 10px; border: none; border-radius: 12px;
+            background: var(--secondary); color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .buy-btn:hover { background: var(--primary); }
+
+        .badge { position: absolute; top: 15px; left: 15px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; }
+        .new { background: #10b981; }
+        .trending { background: #f59e0b; }
+        .offer { background: var(--accent); }
+
+        /* Modal */
+        #mobileModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8); display: none; justify-content: center; align-items: center; z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #fff; padding: 30px; border-radius: 25px; width: 90%; max-width: 500px;
+            text-align: center; position: relative; animation: slideIn 0.3s ease-out;
+        }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #64748b; }
+
+        /* ================= PREMIUM FOOTER CSS ================= */
+        .main-footer {
+            background: var(--secondary);
+            color: white;
+            padding: 60px 5% 20px;
+            text-align: center;
+            border-top: 5px solid var(--primary);
+            margin-top: 50px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .footer-section p {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .dev-credit {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .dev-name {
+            font-weight: 700;
+            font-size: 22px;
+            background: linear-gradient(90deg, #38bdf8, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .copy-text {
+            font-size: 12px;
+            margin-top: 15px;
+            opacity: 0.6;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; }
+            .sidebar { position: static; width: 100%; }
+            .footer-content { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" class="logo" style="text-decoration: none;">📱 INFINITY WORLD</a>
+    <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="mobile.html">Mobiles</a></li>
+        <li><a href="offers.html">Accessories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="cart-icon" onclick="window.location.href='cart.html'">🛒 <span class="cart-badge" id="cartCount">0</span></div>
+</nav>
+
+<div class="main-container">
+    <aside class="sidebar">
+        <h3>Filters</h3>
+        <div class="filter-group">
+            <h4>Brands</h4>
+            <label><input type="checkbox" class="brand-filter" value="iphone"> Apple (iPhone)</label>
+            <label><input type="checkbox" class="brand-filter" value="samsung"> Samsung</label>
+            <label><input type="checkbox" class="brand-filter" value="oneplus"> OnePlus</label>
+            <label><input type="checkbox" class="brand-filter" value="nothing"> Nothing</label>
+            <label><input type="checkbox" class="brand-filter" value="android"> Other Android</label>
+        </div>
+
+        <div class="filter-group">
+            <h4>Budget</h4>
+            <label><input type="radio" name="price" onclick="filterByPrice(0, 30000)"> Under ₹30,000</label>
+            <label><input type="radio" name="price" onclick="filterByPrice(30000, 60000)"> ₹30,000 - ₹60,000</label>
+            <label><input type="radio" name="price" onclick="filterByPrice(60000, 2000000)"> Above ₹60,000</label>
+            <label><input type="radio" name="price" onclick="filterByPrice(0, 2000000)" checked> All Prices</label>
+        </div>
+    </aside>
+
+    <main class="content-area">
+        <div class="products-header">
+            <h2>Smartphone Collection</h2>
+            <p id="item-count">Showing all phones</p>
+        </div>
+        <div class="products-grid" id="productGrid"></div>
+    </main>
+</div>
+
+<div id="mobileModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="" style="height: 200px; object-fit: contain;">
+        <h2 id="modalName" style="margin: 15px 0;"></h2>
+        <div id="modalDetails" style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 15px; font-size: 14px;"></div>
+        <button class="buy-btn" style="margin-top: 20px; width: 100%;" onclick="addToCartFromModal()">Add To Cart</button>
+    </div>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>About Infinity Store</h3>
+            <p>India's most trusted destination for premium smartphones and electronics. Experience the future of mobile technology today.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <p>Order Tracking<br>Warranty Info<br>Customer Care<br>FAQs</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>📧 support@infinityworld.com<br>📞 +91 98765 43210<br>📍 Tech Park, New Delhi</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="dev-credit">Designed & Developed with Passion By</p>
+        <div class="dev-name">Taranjeet Singh</div>
+        <p class="copy-text">&copy; 2026 Infinity World | Premium Tech Destination. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const phones = [
+        { name: "iPhone 15 Pro Max", price: 148900, brand: "iphone", type: "iphone", img: "https://m.media-amazon.com/images/I/81Os1SDWpcL._SX679_.jpg", badge: "New", ram: "8GB", storage: "256GB" },
+        { name: "Samsung Galaxy S24 Ultra", price: 129999, brand: "samsung", type: "android", img: "https://www.myg.in/images/thumbnails/300/300/detailed/91/tv1-removebg-preview.png.png", badge: "Trending", ram: "12GB", storage: "512GB" },
+        { name: "iPhone 15", price: 71200, brand: "iphone", type: "iphone", img: "https://m.media-amazon.com/images/I/71d7rfSl0wL._SX679_.jpg", badge: "", ram: "6GB", storage: "128GB" },
+        { name: "OnePlus 12", price: 64999, brand: "oneplus", type: "android", img: "https://rukminim2.flixcart.com/image/480/560/xif0q/icons/original-MOBGXGT7VXK6HU9T_1.jpeg?q=90", badge: "New", ram: "16GB", storage: "512GB" },
+        { name: "Samsung Galaxy S23 FE", price: 49999, brand: "samsung", type: "android", img: "https://m.media-amazon.com/images/I/61-E0V81kBL._AC_UF894,1000_QL80_.jpg", badge: "Offer", ram: "8GB", storage: "128GB" },
+        { name: "Nothing Phone (2)", price: 39999, brand: "nothing", type: "android", img: "https://m.media-amazon.com/images/I/71ZOtNdaZCL._SX679_.jpg", badge: "", ram: "12GB", storage: "256GB" },
+        { name: "OnePlus Nord CE 4", price: 24999, brand: "oneplus", type: "android", img: "https://img-prd-pim.poorvika.com/product/Oneplus-nord-ce-4-lite-5g-mega-blue-256gb-8gb-ram-Front-Back-View.png", badge: "Best Seller", ram: "8GB", storage: "128GB" },
+        { name: "Google Pixel 8 Pro", price: 106990, brand: "android", type: "android", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3JgjCM1EG4B0AYc-aJAsAWJlC1W_NBuoOoQ&s", badge: "Trending", ram: "12GB", storage: "128GB" },
+        { name: "Redmi Note 13 Pro+", price: 30999, brand: "android", type: "android", img: "https://m.media-amazon.com/images/I/71GLMJ7TQiL._SX679_.jpg", badge: "New", ram: "12GB", storage: "256GB" },
+        { name: "Nothing Phone (2a)", price: 23999, brand: "nothing", type: "android", img: "https://m.media-amazon.com/images/I/61oycK5i7qL._AC_UF894,1000_QL80_.jpg", badge: "Budget", ram: "8GB", storage: "128GB" },
+        { name: "Samsung Galaxy A55", price: 39999, brand: "samsung", type: "android", img: "https://m.media-amazon.com/images/I/71ZrPkGgcLL.jpg", badge: "", ram: "8GB", storage: "128GB" },
+        { name: "iPhone 13", price: 48999, brand: "iphone", type: "iphone", img: "https://m.media-amazon.com/images/I/71GLMJ7TQiL._SX679_.jpg", badge: "Offer", ram: "4GB", storage: "128GB" },
+        { name: "Realme GT 6T", price: 32999, brand: "android", type: "android", img: "https://m.media-amazon.com/images/I/51zrGoAK1JL._AC_UF1000,1000_QL80_.jpg", badge: "Gaming", ram: "128GB", storage: "256GB" },
+        { name: "Motorola Edge 50 Pro", price: 29999, brand: "android", type: "android", img: "https://static.toiimg.com/thumb/resizemode-4,msid-109002277,width-1070,imgv-1/109002277.jpg", badge: "", ram: "8GB", storage: "256GB" },
+        { name: "OnePlus 11R", price: 37999, brand: "oneplus", type: "android", img: "https://m.media-amazon.com/images/I/71yTvU9VgdL._SX679_.jpg", badge: "Popular", ram: "8GB", storage: "128GB" }
+    ];
+
+    let currentPhone = null;
+
+    function displayPhones(filteredList) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+        filteredList.forEach(phone => {
+            grid.innerHTML += `
+                <div class="card ${phone.type}">
+                    ${phone.badge ? `<span class="badge ${phone.badge.toLowerCase().replace(" ", "-")}">${phone.badge}</span>` : ''}
+                    <img src="${phone.img}" onclick="openModal('${phone.name.replace(/'/g, "\\'")}')">
+                    <h3 onclick="openModal('${phone.name.replace(/'/g, "\\'")}')">${phone.name}</h3>
+                    <p class="price">₹${phone.price.toLocaleString()}</p>
+                    <div class="btn-group">
+                        <button class="buy-btn" onclick="addToCart('${phone.name.replace(/'/g, "\\'")}', event)">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('item-count').innerText = `Showing ${filteredList.length} phones`;
+    }
+
+    document.querySelectorAll('.brand-filter').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            let selectedBrands = Array.from(document.querySelectorAll('.brand-filter:checked')).map(cb => cb.value);
+            displayPhones(selectedBrands.length === 0 ? phones : phones.filter(p => selectedBrands.includes(p.brand)));
+        });
+    });
+
+    function filterByPrice(min, max) {
+        displayPhones(phones.filter(p => p.price >= min && p.price <= max));
+    }
+
+    function openModal(name) {
+        const phone = phones.find(p => p.name === name);
+        if(!phone) return;
+        currentPhone = phone;
+        document.getElementById('modalImg').src = phone.img;
+        document.getElementById('modalName').innerText = phone.name;
+        document.getElementById('modalDetails').innerHTML = `
+            <p><strong>Brand:</strong> ${phone.brand.toUpperCase()}</p>
+            <p><strong>Price:</strong> ₹${phone.price.toLocaleString()}</p>
+            <p><strong>RAM:</strong> ${phone.ram}</p>
+            <p><strong>Storage:</strong> ${phone.storage}</p>
+        `;
+        document.getElementById('mobileModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('mobileModal').style.display = 'none'; }
+
+    function addToCart(name, event) {
+        const phone = phones.find(p => p.name === name);
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cart.push({ name: phone.name, price: phone.price, img: phone.img });
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        updateCartBadge();
+
+        if(event && event.target) {
+            const btn = event.target;
+            const oldText = btn.innerText;
+            btn.innerText = "Added ✓";
+            btn.style.background = "#10b981";
+            setTimeout(() => { btn.innerText = oldText; btn.style.background = ""; }, 1000);
+        }
+    }
+
+    function addToCartFromModal() {
+        if(currentPhone) {
+            addToCart(currentPhone.name);
+            closeModal();
+        }
+    }
+
+    function updateCartBadge() {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        document.getElementById('cartCount').innerText = cart.length;
+    }
+
+    window.onclick = (e) => { if(e.target == document.getElementById('mobileModal')) closeModal(); }
+    window.onload = () => { displayPhones(phones); updateCartBadge(); };
+</script>
+</body>
+</html>

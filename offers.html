@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Accessories | 50+ Premium Items</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #0f172a;
+            --accent: #f43f5e;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-light); color: var(--secondary); overflow-x: hidden; }
+
+        .navbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 5%; background: var(--secondary);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .navbar .logo { font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .navbar .menu { display: flex; gap: 20px; list-style: none; }
+        .navbar .menu li a { text-decoration: none; color: #fff; font-weight: 500; transition: 0.3s; }
+        .navbar .menu li a:hover { color: var(--primary); }
+        .cart-icon { color: #fff; font-size: 24px; cursor: pointer; position: relative; }
+        .cart-badge { position: absolute; top: -8px; right: -12px; background: var(--accent); color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 50%; }
+
+        .main-container { display: flex; padding: 30px 5%; gap: 30px; min-height: 80vh; }
+
+        .sidebar {
+            flex: 0 0 280px; background: var(--white); padding: 25px;
+            border-radius: 20px; height: fit-content; box-shadow: var(--shadow);
+            position: sticky; top: 100px;
+        }
+        .sidebar h3 { font-size: 18px; margin-bottom: 20px; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; }
+        .filter-group { margin-bottom: 25px; }
+        .filter-group h4 { font-size: 14px; margin-bottom: 12px; color: #64748b; text-transform: uppercase; }
+        .filter-group label { display: block; margin-bottom: 10px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .filter-group label:hover { color: var(--primary); }
+        .filter-group input { margin-right: 10px; accent-color: var(--primary); }
+
+        .content-area { flex: 1; }
+        .products-header { margin-bottom: 30px; text-align: center; }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;
+        }
+
+        .card {
+            background: var(--white); border-radius: 20px; padding: 15px;
+            text-align: center; transition: 0.4s; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 10px; border-radius: 12px; }
+        .card h3 { font-size: 14px; margin-bottom: 5px; height: 35px; overflow: hidden; }
+        .card .price { font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+        
+        .btn-group { display: flex; gap: 5px; }
+        .btn-add { flex: 2; padding: 8px; border: none; border-radius: 10px; background: var(--secondary); color: #fff; font-size: 13px; cursor: pointer; }
+        .btn-details { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 10px; background: transparent; font-size: 11px; cursor: pointer; }
+
+        /* Modal Styles */
+        #detailModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: #fff; padding: 30px; border-radius: 25px; width: 90%; max-width: 400px; text-align: center; position: relative;
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; }
+
+        /* ================= PREMIUM FOOTER CSS (Same as Index) ================= */
+        .main-footer {
+            background: var(--secondary);
+            color: white;
+            padding: 60px 5% 20px;
+            text-align: center;
+            border-top: 5px solid var(--primary);
+            margin-top: 50px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .footer-section p {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .dev-credit {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .dev-name {
+            font-weight: 700;
+            font-size: 22px;
+            background: linear-gradient(90deg, #38bdf8, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .copy-text {
+            font-size: 12px;
+            margin-top: 15px;
+            opacity: 0.6;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; }
+            .sidebar { position: static; width: 100%; }
+            .footer-content { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" class="logo">📱 INFINITY WORLD</a>
+    <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="mobile.html">Mobiles</a></li>
+        <li><a href="offers.html">Accessories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="cart-icon" onclick="window.location.href='cart.html'">🛒 <span class="cart-badge" id="cartCount">0</span></div>
+</nav>
+
+<div class="main-container">
+    <aside class="sidebar">
+        <h3>Filter Items</h3>
+        <div class="filter-group">
+            <h4>Category</h4>
+            <label><input type="checkbox" class="cat-filter" value="audio"> Audio</label>
+            <label><input type="checkbox" class="cat-filter" value="power"> Power</label>
+            <label><input type="checkbox" class="cat-filter" value="gaming"> Gaming</label>
+            <label><input type="checkbox" class="cat-filter" value="wearable"> Wearables</label>
+            <label><input type="checkbox" class="cat-filter" value="smart"> Smart Home</label>
+        </div>
+    </aside>
+
+    <main class="content-area">
+        <div class="products-header">
+            <h1>Premium Accessories</h1>
+            <p id="count-label">Loading 50+ Items...</p>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+</div>
+
+<div id="detailModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="mImg" src="" style="width:150px; margin-bottom:15px;">
+        <h2 id="mName"></h2>
+        <p id="mDesc" style="margin: 15px 0; font-size: 14px; color: #555;"></p>
+        <h3 id="mPrice" style="color:var(--accent);"></h3>
+        <button class="btn-add" style="width:100%; margin-top:15px;" onclick="addToCartFromModal()">Add To Cart</button>
+    </div>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>About Infinity Store</h3>
+            <p>Leading the 2026 electronics revolution with cutting-edge accessories and premium customer service. Your tech, our passion.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Help</h3>
+            <p>Track Order<br>Replacement Policy<br>Privacy Policy<br>Store Locator</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Info</h3>
+            <p>📧 support@infinityworld.com<br>📞 +91 98765 43210<br>📍 New Delhi, India</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="dev-credit">Designed & Developed with Passion By</p>
+        <div class="dev-name">Taranjeet Singh</div>
+        <p class="copy-text">&copy; 2026 Infinity World | Premium Tech Destination. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script> 
+    const accessories = [
+        { name: "Sony WH-1000XM5", price: 24999, cat: "audio", img: "https://images-cdn.ubuy.co.in/652127b10b0a4502220f9985-sony-wh-1000xm5-headphones-wireless.jpg", desc: "Best-in-class noise cancellation." },
+        { name: "Bose QuietComfort", price: 29900, cat: "audio", img: "https://m.media-amazon.com/images/I/51JbsHSktkL._SX679_.jpg", desc: "Legendary comfort and sound." },
+        { name: "Apple AirPods Max", price: 59900, cat: "audio", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJFxPltKiZ2PAjmEkL_kaNtC6iGwdXen9gUA&s", desc: "Premium design for Apple lovers." },
+        { name: "JBL Flip 6", price: 9999, cat: "audio", img: "https://m.media-amazon.com/images/I/51KDF0HOjrL._AC_UF350,350_QL80_.jpg", desc: "Waterproof portable speaker." },
+        { name: "Sennheiser HD 660S", price: 34990, cat: "audio", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhcr2JHK2vhG107Ifm9euAb5iASYhE0XoEew&s", desc: "Audiophile grade sound." },
+        { name: "Marshall Kilburn II", price: 21999, cat: "audio", img: "https://rukmini1.flixcart.com/image/1500/1500/xif0q/speaker/v/u/c/-original-imagzefgnehfbfav.jpeg?q=70", desc: "Classic retro design speaker." },
+        { name: "Beats Studio Buds", price: 12900, cat: "audio", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8pr2ElxCYav-QMhC7MQV-P_mD_AcPZjJahw&s", desc: "Compact and powerful." },
+        { name: "Samsung Galaxy Buds2 Pro", price: 15999, cat: "audio", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7PTnGPAWozeWVmPlbeIN54-db713CUCJXwg&s", desc: "Seamless Galaxy integration." },
+        { name: "Audio-Technica M50x", price: 11999, cat: "audio", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcW2N477pGNIGXKdMr72saf1mZTAOyr8BJg&s", desc: "Studio monitoring headphones." },
+        { name: "Boat Airdopes 141", price: 1299, cat: "audio", img: "https://www.boat-lifestyle.com/cdn/shop/files/Artboard1copy2_7fd3442e-53cf-4742-b0e4-9692d5c66c86_1800x.png?v=1733305034", desc: "Budget friendly choice." },
+        { name: "Anker 737 PowerBank", price: 13999, cat: "power", img:"https://m.media-amazon.com/images/I/71QrhaW+kAL._AC_UF894,1000_QL80_.jpg", desc: "140W Fast Charging." },
+        { name: "Apple 20W Adapter", price: 1699, cat: "power", img: "https://i0.wp.com/momentgroupofcompany.com/wp-content/uploads/2025/02/img_20250208_122640_28450_x_350_pixel295020558027961532912.jpg", desc: "Original Apple charger." },
+        { name: "Mi 10000mAh PowerBank", price: 1499, cat: "power", img: "https://i03.appmifile.com/794_item_in/04/07/2024/0057f77660e3fa639f23728356c63465.png?thumb=1&q=85", desc: "Slim and reliable." },
+        { name: "Samsung 45W Travel Adapter", price: 2999, cat: "power", img: "https://images.samsung.com/is/image/samsung/p6pim/in/feature/165122865/in-feature-supercharge-your-devices-543189086?$FB_TYPE_A_MO_JPG$", desc: "Super fast charging." },
+        { name: "Belkin 3-in-1 Magsafe", price: 12999, cat: "power", img: "https://www.belkin.com/dw/image/v2/BGBH_PRD/on/demandware.static/-/Sites-master-product-catalog-blk/default/dw174af1ef/images/hi-res/d/7853f11da24a772_belkin-WIZ029zbBK-Magnetic-Foldable-Charger-webgallery-hero01-v01-in.jpg?sfrm=png", desc: "Charge iPhone, Watch, Buds." },
+        { name: "PS5 DualSense Edge", price: 18990, cat: "gaming", img: "https://m.media-amazon.com/images/I/51qcJKGmDXL._AC_UF894,1000_QL80_FMwebp_.jpg"},
+        { name: "Razer Kishi V2", price: 9999, cat: "gaming", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIv3O6SB0DTbctEHPptwCy06N0UWK_HpqPDQ&s"},
+        { name: "Logitech G502 Hero", price: 4495, cat: "gaming", img: "https://m.media-amazon.com/images/I/61mpMH5TzkL._AC_UF1000,1000_QL80_.jpg"},
+        { name: "Echo Dot 5th Gen", price: 5499, cat: "smart", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNRWYxDN6ksvYcj_apJIG5o4OeTgXn2p4q1Q&s"},
+        { name: "Apple TV 4K", price: 14900, cat: "smart", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2iFye9238IvPwknnFIUDTyB2U6xnuZT2uwQ&s"},
+    ];
+
+    let modalItem = null;
+
+    function render(list) {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
+        list.forEach((item, index) => {
+            grid.innerHTML += `
+                <div class="card">
+                    <img src="${item.img || 'https://via.placeholder.com/150'}">
+                    <h3>${item.name}</h3>
+                    <p class="price">₹${item.price.toLocaleString()}</p>
+                    <div class="btn-group">
+                        <button class="btn-add" onclick="addToCart('${item.name}', event)">Add</button>
+                        <button class="btn-details" onclick="openModal('${item.name}')">Details</button>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('count-label').innerText = `Total Items: ${list.length}`;
+    }
+
+    document.querySelectorAll('.cat-filter').forEach(box => {
+        box.addEventListener('change', () => {
+            const active = Array.from(document.querySelectorAll('.cat-filter:checked')).map(b => b.value);
+            render(active.length ? accessories.filter(a => active.includes(a.cat)) : accessories);
+        });
+    });
+
+    function openModal(name) {
+        const item = accessories.find(a => a.name === name);
+        modalItem = item;
+        document.getElementById('mImg').src = item.img || 'https://via.placeholder.com/150';
+        document.getElementById('mName').innerText = item.name;
+        document.getElementById('mDesc').innerText = item.desc;
+        document.getElementById('mPrice').innerText = '₹' + item.price.toLocaleString();
+        document.getElementById('detailModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('detailModal').style.display = 'none'; }
+
+    function addToCart(name, event) {
+        const product = accessories.find(a => a.name === name);
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cart.push({
+            name: product.name,
+            price: product.price,
+            img: product.img
+        });
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        updateCartBadge();
+
+        if(event) {
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Added ✔";
+            btn.style.background = "#10b981";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = "";
+            }, 1000);
+        }
+    }
+
+    function addToCartFromModal() {
+        if(modalItem) {
+            addToCart(modalItem.name);
+            closeModal();
+        }
+    }
+
+    function updateCartBadge() {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        document.getElementById('cartCount').innerText = cart.length;
+    }
+
+    window.onload = () => {
+        render(accessories);
+        updateCartBadge();
+    };
+</script>
+</body>
+</html>

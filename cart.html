@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Infinity World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #0f172a;
+            --accent: #f43f5e;
+            --success: #22c55e;
+            --bg-light: #f1f5f9;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-light); color: var(--text-main); padding: 40px 5%; }
+
+        .checkout-wrapper {
+            max-width: 1000px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px;
+        }
+
+        .main-content, .sidebar { background: var(--white); padding: 30px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+
+        h2, h3 { margin-bottom: 20px; color: var(--secondary); display: flex; align-items: center; gap: 10px; }
+
+        /* Form Styling */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-muted); }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 10px;
+            font-size: 14px; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+
+        /* Cart Items in Sidebar */
+        .cart-item-mini { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--bg-light); }
+        .cart-item-mini img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
+        .mini-info { flex: 1; margin-left: 10px; font-size: 14px; }
+        .mini-price { font-weight: 600; color: var(--secondary); }
+
+        /* Payment Options */
+        .options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .pay-option {
+            border: 2px solid var(--border); padding: 10px; border-radius: 12px;
+            cursor: pointer; text-align: center; transition: 0.3s;
+        }
+        .pay-option img { height: 20px; display: block; margin: 0 auto 5px; }
+        .pay-option span { font-size: 11px; font-weight: 600; }
+        input[type="radio"] { display: none; }
+        input[type="radio"]:checked + .pay-option { border-color: var(--primary); background: #f0f9ff; }
+
+        .summary-box { background: var(--secondary); color: white; padding: 20px; border-radius: 15px; margin-top: 20px; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; }
+        .total-amount { font-size: 24px; font-weight: 700; color: var(--primary); }
+
+        .checkout-btn {
+            width: 100%; padding: 16px; margin-top: 20px; border: none; border-radius: 12px;
+            background: var(--success); color: white; font-weight: 700; font-size: 16px;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
+        }
+        .checkout-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        /* Loader */
+        #loader {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.95); z-index: 9999; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 850px) { .checkout-wrapper { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; font-weight: 600;">Verifying Details & Payment...</p>
+    </div>
+
+    <div class="checkout-wrapper">
+        <div class="main-content">
+            <h2>📍 Shipping Details</h2>
+            <form id="shippingForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="custName" placeholder="Enter your full name" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="custEmail" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="custPhone" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="custAddress" rows="3" placeholder="Flat No, Street, Landmark, City, Pincode" required></textarea>
+                </div>
+            </form>
+
+            <h3 style="margin-top: 30px;">💳 Payment Method</h3>
+            <div class="options">
+                <label>
+                    <input type="radio" name="pay" value="Paytm" checked>
+                    <div class="pay-option">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/1200px-Paytm_Logo_%28standalone%29.svg.png" alt="Paytm">
+                        <span>Paytm</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="pay" value="PhonePe">
+                    <div class="pay-option">
+                        <img src="https://images.ctfassets.net/drk57q8lctrm/2xVzOuwCEAwvno1fx5Ywo/13fbf64e95946dc6164e626392336cfe/phonepe-logo.webp" alt="PhonePe">
+                        <span>PhonePe</span>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="pay" value="UPI">
+                    <div class="pay-option">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/UPI_logo.svg/1280px-UPI_logo.svg.png" alt="UPI">
+                        <span>Any UPI</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>🛒 Order Summary</h3>
+            <div id="miniCartList">
+                </div>
+
+            <div class="summary-box">
+                <div class="total-row">
+                    <span>Grand Total</span>
+                    <span class="total-amount" id="totalPrice">₹0</span>
+                </div>
+                <p style="font-size: 11px; opacity: 0.7; margin-top: 10px;">Free delivery on all premium orders.</p>
+            </div>
+
+            <button class="checkout-btn" onclick="validateAndPay()">Complete Order</button>
+            <center><a href="index.html" style="display:block; margin-top:15px; font-size:13px; color: var(--text-muted); text-decoration:none;">← Edit Cart</a></center>
+        </div>
+    </div>
+
+    <script>
+        function loadCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const list = document.getElementById('miniCartList');
+            let total = 0;
+
+            if (cart.length === 0) {
+                window.location.href = "index.html"; // Redirect if empty
+                return;
+            }
+
+            list.innerHTML = cart.map(item => {
+                total += item.price;
+                return `
+                    <div class="cart-item-mini">
+                        <img src="${item.img || 'https://via.placeholder.com/50'}" alt="p">
+                        <div class="mini-info">
+                            <strong>${item.name}</strong>
+                        </div>
+                        <div class="mini-price">₹${item.price.toLocaleString()}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('totalPrice').innerText = `₹${total.toLocaleString()}`;
+        }
+
+        function validateAndPay() {
+            // Get form values
+            const name = document.getElementById('custName').value;
+            const email = document.getElementById('custEmail').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const method = document.querySelector('input[name="pay"]:checked').value;
+
+            // Simple Validation
+            if (!name || !email || !phone || !address) {
+                alert("Please fill all shipping details to proceed.");
+                return;
+            }
+
+            // Show Loader
+            const loader = document.getElementById('loader');
+            loader.style.display = "flex";
+
+            // Professional Simulation
+            setTimeout(() => {
+                loader.style.display = "none";
+                alert(`🎉 THANK YOU, ${name.toUpperCase()}!\n\nOrder Placed Successfully via ${method}.\nYour items will be delivered to:\n${address}\n\nOrder ID: INF-${Math.floor(Math.random()*999999)}`);
+                
+                localStorage.removeItem('cartItems');
+                window.location.href = "index.html";
+            }, 3500);
+        }
+
+        window.onload = loadCheckout;
+    </script>
+</body>
+</html>
