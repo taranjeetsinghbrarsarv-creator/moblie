@@ -265,26 +265,88 @@
             .features { grid-template-columns: 1fr; }
             .footer-content { text-align: center; }
         }
+
+        /* ================= MOBILE NAVBAR FIX ================= */
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: row;
+        padding: 12px 5%;
+    }
+
+    .search-container {
+        display: none; /* mobile me search hide */
+    }
+
+    .menu {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--secondary);
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding: 25px 0;
+        display: none;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+        
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <h2 class="logo">📱 INFINITY WORLD</h2>
+   <nav class="navbar">
+    <h2 class="logo">📱 INFINITY WORLD</h2>
 
-        <div class="search-container">
-            <input type="text" id="mainSearch" placeholder="Search brands, models..." onkeyup="handleSearch(this.value)">
-        </div>
+    <div class="search-container">
+        <input type="text" id="mainSearch" placeholder="Search brands, models..." onkeyup="handleSearch(this.value)">
+    </div>
 
-        <ul class="menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="mobile.html">Mobiles</a></li>
-            <li><a href="offers.html">Accessories</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+    <!-- Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
-        <div class="cart-icon" onclick="window.location.href='cart.html'">🛒 <span class="cart-badge" id="cartCount">0</span></div>
-    </nav>
+    <ul class="menu" id="menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="mobile.html">Mobiles</a></li>
+        <li><a href="offers.html">Accessories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+        🛒 <span class="cart-badge" id="cartCount">0</span>
+    </div>
+</nav>
 
     <section id="searchResultsSection" style="display:none;" class="container">
         <h2 class="section-title">🔍 Search Results</h2>
@@ -368,6 +430,14 @@
     </footer>
 
     <script>
+
+        // ================= HAMBURGER MENU =================
+const hamburger = document.getElementById("hamburger");
+const menu = document.getElementById("menu");
+
+hamburger.addEventListener("click", () => {
+    menu.classList.toggle("active");
+});
         // ================= DATABASE =================
         const products = [
             { id: 1, name: "Samsung Galaxy S23 Ultra", price: 124999, img: "https://m.media-amazon.com/images/I/81ZSn2rk9WL._SX679_.jpg", type: "mobile", badge: "20% OFF" },
