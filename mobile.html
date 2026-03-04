@@ -30,7 +30,7 @@
         .navbar .menu li a:hover { color: var(--primary); }
         .cart-icon { color: #fff; font-size: 22px; cursor: pointer; position: relative; }
         .cart-badge { position: absolute; top: -8px; right: -12px; background: var(--accent); color: #fff; font-size: 12px; padding: 2px 7px; border-radius: 50%; }
-
+      
         .main-container { display: flex; padding: 30px 5%; gap: 30px; min-height: 80vh; }
 
         .sidebar {
@@ -139,19 +139,76 @@
             .sidebar { position: static; width: 100%; }
             .footer-content { text-align: center; }
         }
+/* ===== WORKING HAMBURGER NAVBAR ===== */
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+
+    .navbar {
+        position: relative;
+    }
+
+    .menu {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--secondary);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        gap: 20px;
+        display: none !important;
+    }
+
+    .menu.active {
+        display: flex !important;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="index.html" class="logo" style="text-decoration: none;">📱 INFINITY WORLD</a>
-    <ul class="menu">
+    <a href="index.html" class="logo">📱 INFINITY WORLD</a>
+
+    <!-- Hamburger -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <ul class="menu" id="menu">
         <li><a href="index.html">Home</a></li>
         <li><a href="mobile.html">Mobiles</a></li>
         <li><a href="offers.html">Accessories</a></li>
         <li><a href="contact.html">Contact</a></li>
     </ul>
-    <div class="cart-icon" onclick="window.location.href='cart.html'">🛒 <span class="cart-badge" id="cartCount">0</span></div>
+
+    <div class="cart-icon" onclick="window.location.href='cart.html'">
+        🛒 <span class="cart-badge" id="cartCount">0</span>
+    </div>
 </nav>
 
 <div class="main-container">
@@ -314,6 +371,20 @@
 
     window.onclick = (e) => { if(e.target == document.getElementById('mobileModal')) closeModal(); }
     window.onload = () => { displayPhones(phones); updateCartBadge(); };
+
+    // ===== SAFE HAMBURGER SCRIPT =====
+document.addEventListener("DOMContentLoaded", function () {
+
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("menu");
+
+    if (hamburger && menu) {
+        hamburger.addEventListener("click", function () {
+            menu.classList.toggle("active");
+        });
+    }
+
+});
 </script>
 </body>
 </html>
