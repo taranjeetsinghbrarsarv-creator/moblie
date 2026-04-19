@@ -75,9 +75,11 @@
         }
 
         /* ================= VIDEO HERO SECTION STYLES ================= */
+
+        
         .hero {
             position: relative;
-            height: 75vh;
+            height: 80vh;
             width: 100%;
             display: flex;
             align-items: center;
@@ -317,7 +319,122 @@
     }
 }
 
-        
+/* Initial Navbar State */
+.navbar {
+    position: fixed;
+    top: -100px; /* Shuruat mein upar chhupa rahega */
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth bounce/3D feel */
+    transform: rotateX(-90deg); /* 3D rotation start */
+    transform-origin: top;
+    opacity: 0;
+}
+
+/* Jab user scroll karega tab ye class active hogi */
+.navbar.nav-active {
+    top: 0;
+    transform: rotateX(0deg); /* 3D flip effect */
+    opacity: 1;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: rgba(14, 41, 59, 0.95); /* Glassmorphism touch */
+    backdrop-filter: blur(10px);
+}
+
+.reviews-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Light background to separate from white sections */
+    text-align: center;
+}
+
+.section-title {
+    color: #1a2e44; /* Match your navbar color */
+    font-size: 2rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.reviews-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.review-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: left;
+    transition: transform 0.3s ease;
+    border-bottom: 4px solid #1a2e44; /* Subtle accent line */
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+}
+
+.stars {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.review-text {
+    color: #555;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    min-height: 80px;
+}
+
+.customer-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.customer-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.customer-name {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.verify-badge {
+    font-size: 0.8rem;
+    color: #27ae60;
+    font-weight: 600;
+}
+        .profile-icon-wrapper:hover {
+    background: #e0f2fe !important; /* Light blue on hover */
+    border-color: var(--primary) !important;
+}
+
+.profile-icon-wrapper:hover svg {
+    color: var(--primary) !important;
+}
+
+/* For smooth dropdown appearing */
+#userDropdown.show {
+    display: block !important;
+    animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 <body>
@@ -338,6 +455,7 @@
 
     <ul class="menu" id="menu">
         <li><a href="#">Home</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="mobile.html">Mobiles</a></li>
         <li><a href="offers.html">Accessories</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -346,6 +464,20 @@
     <div class="cart-icon" onclick="window.location.href='cart.html'">
         🛒 <span class="cart-badge" id="cartCount">0</span>
     </div>
+
+    <div class="user-profile-container" style="position: relative; cursor: pointer; display: flex; align-items: center;">
+    <div class="profile-icon-wrapper" onclick="toggleUserMenu()" style="display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--bg-light); border: 1px solid var(--border); transition: 0.3s;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--secondary);">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    </div>
+
+    <div id="userDropdown" style="display: none; position: absolute; top: 48px; right: 0; width: 180px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--border); overflow: hidden; z-index: 1001;">
+        <a href="my acctount.html" style="display: block; padding: 12px 16px; text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: 0.3s; border-bottom: 1px solid #f1f5f9;">👤 My Account</a>
+        <a href="#" style="display: block; padding: 12px 16px; text-decoration: none; color: #f43f5e; font-size: 13px; font-weight: 500; transition: 0.3s;">🚪 Logout</a>
+    </div>
+</div>
 </nav>
 
     <section id="searchResultsSection" style="display:none;" class="container">
@@ -374,7 +506,7 @@
                 </div>
         </section>
 
-        <section class="container">
+        <!-- <section class="container">
             <div class="about-shop">
                 <div class="about-grid">
                     <div class="about-content">
@@ -405,7 +537,17 @@
                 </div>
             </div>
         </section>
+    </div> -->
+<section class="reviews-section" style="padding: 60px 0; background: #f8fafc; text-align: center;">
+    <h2 class="section-title" style="margin-bottom: 40px; font-family: 'Poppins'; font-weight: 700;">Customer Stories</h2>
+    
+    <div class="reviews-wrapper" style="max-width: 1200px; margin: auto; position: relative; min-height: 350px;">
+        <div id="reviewDisplay" style="display: flex; justify-content: center; gap: 20px; transition: all 0.5s ease;">
+            </div>
     </div>
+
+    <div id="dotContainer" style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;"></div>
+</section>
 
     <footer class="main-footer">
         <div class="footer-content">
@@ -525,6 +667,101 @@ hamburger.addEventListener("click", () => {
         }
 
         window.onload = loadProducts;
+
+        window.addEventListener("scroll", function() {
+    const nav = document.querySelector(".navbar");
+    // Agar user 100px se zyada scroll karega toh navbar dikhega
+    if (window.scrollY > 100) {
+        nav.classList.add("nav-active");
+    } else {
+        nav.classList.remove("nav-active");
+    }
+});
+
+const allReviews = [
+    { name: "Amit Singh", text: "Vivo X100 Pro ki delivery super fast thi. Packing solid hai!", stars: "★★★★★" },
+    { name: "Sandeep Brar", text: "Best prices for iPhones. Customer support is very helpful.", stars: "★★★★★" },
+    { name: "Priya Sharma", text: "Genuine accessories. Collection kaafi premium hai.", stars: "★★★★☆" },
+    { name: "Vikram Rathore", text: "S24 Ultra order kiya tha, 2 din mein mil gaya. Trusted!", stars: "★★★★★" },
+    { name: "Neha Kapoor", text: "Offline market se sasta aur 100% original products.", stars: "★★★★★" },
+    { name: "Rahul Verma", text: "Exchange offer bahut achha mila mere purane phone ka.", stars: "★★★★★" },
+    { name: "Karan Johar", text: "Infinity World is now my go-to store for all gadgets.", stars: "★★★★★" },
+    { name: "Anjali Mehra", text: "Display panels and battery quality are also very good.", stars: "★★★★★" },
+    { name: "Sunny Deol", text: "Got my Pixel 8 Pro at the lowest price online. Happy!", stars: "★★★★☆" },
+    { name: "Rohan Preet", text: "Smooth checkout and multiple payment options available.", stars: "★★★★★" },
+    { name: "Simran Gill", text: "Packing was so good, it took 5 mins to open!", stars: "★★★★★" },
+    { name: "Arjun Kumar", text: "Authentic warranty and bill provided with the device.", stars: "★★★★★" },
+    { name: "Ishita Dutta", text: "Highly professional staff. Cleared all my doubts.", stars: "★★★★★" }
+];
+
+let currentBatch = 0;
+const display = document.getElementById('reviewDisplay');
+const dots = document.getElementById('dotContainer');
+
+function renderReviews() {
+    display.innerHTML = "";
+    let step = window.innerWidth < 600 ? 1 : (window.innerWidth < 900 ? 2 : 3);
+    
+    // Calculate which reviews to show
+    let start = currentBatch * step;
+    let batch = allReviews.slice(start, start + step);
+
+    // If batch is empty (end of list), go back to start
+    if (batch.length === 0) {
+        currentBatch = 0;
+        renderReviews();
+        return;
+    }
+
+    batch.forEach(rev => {
+        display.innerHTML += `
+            <div class="review-card">
+                <div style="color:#fbbf24; margin-bottom:10px;">${rev.stars}</div>
+                <p style="font-size:14px; color:#475569; min-height:60px;">"${rev.text}"</p>
+                <div style="display:flex; align-items:center; gap:12px; margin-top:15px; border-top:1px solid #f1f5f9; padding-top:15px;">
+                    <img src="https://ui-avatars.com/api/?name=${rev.name}&background=random" style="width:40px; border-radius:50%;">
+                    <div style="text-align:left;">
+                        <h4 style="font-size:14px; margin:0;">${rev.name}</h4>
+                        <span style="font-size:10px; color:#10b981;">✓ Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    updateDots(step);
+}
+
+function updateDots(step) {
+    dots.innerHTML = "";
+    const totalBatches = Math.ceil(allReviews.length / step);
+    for (let i = 0; i < totalBatches; i++) {
+        dots.innerHTML += `<div class="dot ${i === currentBatch ? 'active' : ''}"></div>`;
+    }
+}
+
+setInterval(() => {
+    currentBatch++;
+    renderReviews();
+}, 5000);
+
+window.addEventListener('resize', renderReviews);
+renderReviews();
+
+function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+}
+
+// Click bahar karne par menu band ho jaye
+window.onclick = function(event) {
+    if (!event.target.closest('.user-profile-container')) {
+        const dropdown = document.getElementById('userDropdown');
+        if (dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+        }
+    }
+}
     </script>
 </body>
 </html>
